@@ -8,7 +8,3 @@
 
 ###Scrape it like you know it:
 - Run the main script with: `python bec_scraper.py` and magic will happen  
-
-####To do
-- Sqlite database(s) 
-- The Python3 version (?)
