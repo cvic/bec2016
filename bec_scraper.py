@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib2
 import wget
-import re
 
 url = "http://parlamentare2016.bec.ro/candidati/candidaturi-depuse-la-birourile-electorale-de-circumscriptie"
 
@@ -14,34 +13,27 @@ soup = BeautifulSoup(html_page, "lxml")
 for link in soup.findAll('a'):
     county_links.append(link.get('href'))
 
-#print county_links
+filtered_county_links = [cl for cl in county_links if cl.count("/") == 6]
 
-filtered_county_links = [k for k in county_links if 'candidaturi' in k]
-
-#print filtered_county_links
-
-for r in filtered_county_links:
-    print r
-    html_page = urllib2.urlopen(r)
+for link in filtered_county_links:
+    html_page = urllib2.urlopen(link)
     soup = BeautifulSoup(html_page, "lxml")
     for link in soup.findAll('a'):
         party_links.append(link.get('href'))
 
+filtered_party_links = [pl for pl in party_links if pl.count("/") == 7]
 
-filtered_party_links = [k for k in party_links if 'candidaturi' in k]
+#print filtered_party_links
 
-for ps in filtered_party_links:
-    print ps
-    html_page = urllib2.urlopen(ps)
+for link in filtered_party_links:
+    html_page = urllib2.urlopen(link)
     soup = BeautifulSoup(html_page, "lxml")
     for link in soup.findAll('a'):
         pdfs.append(link.get('href'))
 
-print pdfs
-
-filtered_pdf_list = [k for k in pdfs if 'pdf' in k]
+filtered_pdf_list = [pdf for pdf in pdfs if 'uploads' in pdf]
 
 for file in filtered_pdf_list:
     print file
-    filename = wget.download(file) 
+    filename = wget.download(file)
     print ' Saved ', filename
