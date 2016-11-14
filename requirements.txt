@@ -1,3 +1,6 @@
 wget
 requests
 beautifulsoup4
+lxml
+argparse
+textract
