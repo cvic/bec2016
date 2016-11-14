@@ -33,6 +33,20 @@ def check_file(f):
   else:
     return f, "NOK"
 
+def slice(f):
+  f2a = file2array(f)
+  nume = f2a.index("NUMELE SI PRENUMELE\n")
+  judet_domiciliu = f2a.index("JUDET DOMICILIU\n")
+  localitate_domiciliu = f2a.index("LOCALITATE DOMICILIU\n")
+  ocupatia = f2a.index("OCUPATIA\n")
+  profesia = f2a.index("PROFESIA\n")
+  print check_file(f)
+  print f2a[nume+1:judet_domiciliu-1]
+  print f2a[judet_domiciliu+1:localitate_domiciliu-1]
+  print f2a[localitate_domiciliu+1:ocupatia-1]
+  print f2a[ocupatia+1:profesia-1]
+  
+  
 if __name__ == "__main__":
   NO_OK_LINES = 9
   txt_folder = "texts/"
@@ -45,16 +59,20 @@ if __name__ == "__main__":
 
 #  print file2array("texts/centralizator_BEJ_42_58_CD.txt")
 
+ 
 ## centralizator_BEJ_13_16_CD.txt
 ## centralizator_BEJ_17_111_CD.txt  - fucked
 ## centralizator_BEJ_23_37_S.txt - OK
-  print check_file("texts/centralizator_BEJ_17_111_CD.txt")
-  print check_file("texts/centralizator_BEJ_17_111_S.txt")
-  print check_file("texts/centralizator_BEJ_13_16_CD.txt")
-  print check_file("texts/centralizator_BEJ_42_58_CD.txt")
+#  print check_file("texts/centralizator_BEJ_17_111_CD.txt")
+#  print check_file("texts/centralizator_BEJ_17_111_S.txt")
+#  print check_file("texts/centralizator_BEJ_13_16_CD.txt")
+#  print check_file("texts/centralizator_BEJ_42_58_CD.txt")
+#  slice("texts/centralizator_BEJ_42_58_CD.txt")
+#  slice("texts/centralizator_BEJ_17_111_S.txt")
+  slice("texts/centralizator_BEJ_13_111_CD.txt")
 
-  for m in  map(check_file, temp):
-    print m
+#  for m in  map(check_file, temp):
+#    print m
 
 """
   for f in temp:
