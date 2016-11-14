@@ -9,6 +9,16 @@ import textract
 import sys
 from os import listdir
 from os.path import isfile, join
+import logging
+import argparse
+
+logging.basicConfig(filename='extractor.log', level=logging.DEBUG)
+
+parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description='Process tables stuck in pdf files.')
+
+parser.add_argument("folder", help="A magic folder that contains the pdfs")
+args = parser.parse_args()
 
 # ¯\_(.)_/¯ 
 # http://stackoverflow.com/questions/21129020/how-to-fix-unicodedecodeerror-ascii-codec-cant-decode-byte
@@ -20,6 +30,7 @@ def fix_path(file):
 
 def extract_text(file):
   utf8_text = textract.process(file)
+  logging.debug('Extracting text from %s' % file)
   print "Processing ", os.path.splitext(os.path.basename(file))[0]
   utf8_txt_file = utf8_txt_folder + "utf8_" + os.path.splitext(os.path.basename(file))[0] + ".txt"
   with codecs.open(utf8_txt_file,'w', encoding='utf-8') as f8:
@@ -34,7 +45,7 @@ def extract_text(file):
     f.write(output_txt)
 
 if __name__ == "__main__":
-  pdf_folder = "pdfs_/"
+  pdf_folder = args.folder
   utf8_txt_folder = "utf8_texts/"
   txt_folder = "texts/"
   
