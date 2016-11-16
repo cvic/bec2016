@@ -5,3 +5,5 @@ lxml
 argparse
 textract
 numpy
+pep8
+flake8
