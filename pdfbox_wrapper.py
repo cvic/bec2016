@@ -8,9 +8,11 @@ import logging
 logging.basicConfig(filename='java_stuff.log',level=logging.DEBUG, format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
 
 # ok, but not ok
-SOK_FOLDER = "/home/vic/playground/bec2016/sok_utf8_txt_files/"
-PDF_FOLDER = "/home/vic/playground/bec2016/test_pdfs/"
-TXT_FOLDER = "/home/vic/playground/bec2016/text_files/"
+SOK_FOLDER = "/home/vic/bec2016/sok_utf8_txt_files/"
+PDF_FOLDER = "pdfs/"
+TXT_FOLDER = "text_files/"
+JAVA_BIN = "/usr/bin/java"
+PDFBOX_JAR_DIR = "/home/vic/bec2016/lib/"
 
 def fix_path(file):
   return TXT_FOLDER + file
@@ -41,7 +43,7 @@ def ok_file(f):
 def pdfbox_foo(f):
   filename = os.path.splitext(os.path.basename(f))[0]
   logging.debug('Extracting text from = %s' % filename) 
-  call(["java", "-jar", "pdfbox-app-2.0.3.jar", "ExtractText", PDF_FOLDER + filename + ".pdf", SOK_FOLDER + filename + ".txt" ])
+  call([JAVA_BIN, "-jar", PDFBOX_JAR_DIR + "pdfbox-app-2.0.3.jar", "ExtractText", PDF_FOLDER + filename + ".pdf", SOK_FOLDER + filename + ".txt" ])
 
 def main(): 
   if not os.path.isdir(PDF_FOLDER):
@@ -52,7 +54,7 @@ def main():
     print "No txt folder either, pfff..."
     sys.exit(0)
 
-  if not os.path.exists("pdfbox-app-2.0.3.jar"):
+  if not os.path.isdir(PDFBOX_JAR_DIR):
     print "pdfbox jar not found, bye!"
     sys.exit(0)
 
